@@ -1,0 +1,59 @@
+export const CELL_SIZE = 16;
+export const SPRITE_SHEET_SRC = '/ciabattas-revenge-sprites.png';
+
+export const PLACEMENT_TYPE_HERO = "HERO";
+export const PLACEMENT_TYPE_GOAL = "GOAL";
+
+export const DIRECTION_LEFT = "LEFT";
+export const DIRECTION_RIGHT = "RIGHT";
+export const DIRECTION_UP = "UP";
+export const DIRECTION_DOWN = "DOWN";
+
+export const directionUpdateMap = {
+	[DIRECTION_LEFT]: { x: -1, y: 0 },
+	[DIRECTION_RIGHT]: { x: 1, y: 0 },
+	[DIRECTION_UP]: { x: 0, y: -1 },
+	[DIRECTION_DOWN]: { x: 0, y: 1 },
+}
+
+export const BODY_SKINS = {
+ NORMAL: "NORMAL",
+ WATER: "WATER",
+ ICE: "ICE",
+ CONVEYOR: "CONVEYOR",
+ FIRE: "FIRE",
+ TELEPORT: "TELEPORT",
+ SCARED: "SCARED",
+};
+ 
+export const HERO_RUN_1 = "HERO_RUN_1";
+export const HERO_RUN_2 = "HERO_RUN_2";
+
+export const LEVEL_THEMES = {
+	YELLOW: "YELLOW",
+	BLUE: "BLUE"
+};
+
+export const THEME_BACKGROUNDS = {
+	[LEVEL_THEMES.YELLOW]: "#2f2808",
+	[LEVEL_THEMES.BLUE]: "#3d4c67",
+};
+
+export const THEME_TILES_MAP = {
+	[LEVEL_THEMES.YELLOW]: {
+		FLOOR: "1x1",
+		TOP: "1x0",
+		LEFT: "0x1",
+		RIGHT: "2x1",
+		BOTTOM: "1x2",
+		WALL: "0x2",
+	},
+	[LEVEL_THEMES.BLUE]: {
+		FLOOR: "4x1",
+		TOP: "4x0",
+		LEFT: "3x1",
+		RIGHT: "5x1",
+		BOTTOM: "4x2",
+		WALL: "3x2",
+	},
+};

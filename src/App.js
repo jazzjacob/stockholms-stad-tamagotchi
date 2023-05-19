@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from 'react';
+import { SPRITE_SHEET_SRC } from './helpers/consts';
+import RenderLevel from './components/level-layout/RenderLevel';
+import { useRecoilState } from 'recoil';
+import { spriteSheetImageAtom } from './atoms/spriteSheetImageAtom';
 
 function App() {
+	const [spriteSheetImage, setSpriteSheetImage] = useRecoilState(spriteSheetImageAtom);
+	
+	useEffect(() => {
+		const image = new Image();
+		image.src = SPRITE_SHEET_SRC;
+		image.onload = () => {
+			setSpriteSheetImage(image);
+		};
+	}, [setSpriteSheetImage]);
+	
+	if (!spriteSheetImage) {
+		return null;
+	};
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+			<p>Hello</p>
+			<RenderLevel />
     </div>
   );
 }
