@@ -1,5 +1,4 @@
 import { Placement } from './Placement';
-import Sprite from '../components/object-graphics/Sprite';
 import { TILES } from '../helpers/tiles';
 import Hero from '../components/object-graphics/Hero';
 import {
@@ -12,9 +11,9 @@ import {
 } from '../helpers/consts';
 
  const heroSkinMap = {
-	 [BODY_SKINS.NORMAL]: [TILES.HERO_LEFT, TILES.HERO_RIGHT],
-	 [HERO_RUN_1]: [TILES.HERO_RUN_1_LEFT, TILES.HERO_RUN_1_RIGHT],
-	 [HERO_RUN_2]: [TILES.HERO_RUN_2_LEFT, TILES.HERO_RUN_2_RIGHT],
+	 [BODY_SKINS.NORMAL]: [TILES.GUBBE_1, TILES.GUBBE_1],
+	 [HERO_RUN_1]: [TILES.GUBBE_2, TILES.GUBBE_2],
+	 [HERO_RUN_2]: [TILES.GUBBE_2, TILES.GUBBE_2],
  };
 
 export class HeroPlacement extends Placement {

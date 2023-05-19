@@ -1,5 +1,5 @@
 export const CELL_SIZE = 16;
-export const SPRITE_SHEET_SRC = '/ciabattas-revenge-sprites.png';
+export const SPRITE_SHEET_SRC = '/ciabattas-revenge-sprites-2.png';
 
 export const PLACEMENT_TYPE_HERO = "HERO";
 export const PLACEMENT_TYPE_GOAL = "GOAL";
@@ -17,13 +17,13 @@ export const directionUpdateMap = {
 }
 
 export const BODY_SKINS = {
- NORMAL: "NORMAL",
- WATER: "WATER",
- ICE: "ICE",
- CONVEYOR: "CONVEYOR",
- FIRE: "FIRE",
- TELEPORT: "TELEPORT",
- SCARED: "SCARED",
+	NORMAL: "NORMAL",
+	WATER: "WATER",
+	ICE: "ICE",
+	CONVEYOR: "CONVEYOR",
+	FIRE: "FIRE",
+	TELEPORT: "TELEPORT",
+	SCARED: "SCARED",
 };
  
 export const HERO_RUN_1 = "HERO_RUN_1";

@@ -31,7 +31,7 @@ export class LevelState {
 		});
 		
 		// Cache a reference to the hero
-		this.heroRef = this.placements.find(p => p.type === PLACEMENT_TYPE_HERO);
+		this.heroRef = this.placements.find(placement => placement.type === PLACEMENT_TYPE_HERO);
 		
 		this.startGameLoop();
 	}
