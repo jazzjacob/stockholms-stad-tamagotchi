@@ -7,6 +7,7 @@ import { TILES } from '../helpers/tiles';
 import { placementFactory } from './PlacementFactory';
 import { GameLoop } from './GameLoop';
 import { DirectionControls } from './DirectionControls';
+import { LevelAnimatedFrames } from './LevelAnimatedFrames';
 
 
 export class LevelState {
@@ -14,6 +15,9 @@ export class LevelState {
 		this.id = levelId;
 		this.onEmit = onEmit;
 		this.directionControls = new DirectionControls();
+		
+		// Create a frame animation manager
+		this.animatedFrames = new LevelAnimatedFrames();
 		
 		// Start the level!
 		this.start();
@@ -53,6 +57,9 @@ export class LevelState {
 		this.placements.forEach(placement => {
 			placement.tick();
 		});
+		
+		// Work on animation frames
+		this.animatedFrames.tick();
 		
 		// Emit any changes to React
 		this.onEmit(this.getState());

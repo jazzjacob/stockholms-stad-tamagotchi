@@ -17,6 +17,33 @@ import {
  };
 
 export class HeroPlacement extends Placement {
+	constructor(properties, level) {
+		super(properties, level);	
+		
+		this.tickBetweenMovesInterval = 28;
+		this.ticksUntilNextMove = this.tickBetweenMovesInterval;
+	}
+	
+	tickAttemptAiMove() {
+		if (this.ticksUntilNextMove > 0) {
+			this.ticksUntilNextMove -= 1;
+			return;
+		}
+		this.internalMoveRequested();
+	}
+	
+	internalMoveRequested() {
+		// Attempt to start moving
+		if (this.movingPixelsRemaining > 0) {
+			return;
+		}
+		
+		// Start the move
+		this.ticksUntilNextMove = this.tickBetweenMovesInterval;
+		//this.movingPixelsRemaining = 16;
+		this.getYTranslate();
+	}
+	
 	controllerMoveRequested(direction) {
 		// Attempt to start moving
 		if (this.movingPixelsRemaining > 0) {
@@ -45,6 +72,7 @@ export class HeroPlacement extends Placement {
 	
 	tick() {
 		this.tickMovingPixelProgress();
+		this.tickAttemptAiMove();
 	}
 	
 	tickMovingPixelProgress() {
@@ -98,6 +126,7 @@ export class HeroPlacement extends Placement {
 	}
 	
 	renderComponent() {
-		return <Hero frameCoord={this.getFrame()} yTranslate={this.getYTranslate()} />;
+		const heroFrame = this.level.animatedFrames.gubbeFrame;
+		return <Hero frameCoord={heroFrame} yTranslate={this.getYTranslate()} />;
 	}
 }
