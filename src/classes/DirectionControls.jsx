@@ -15,7 +15,7 @@ export class DirectionControls {
 		 	s: DIRECTION_DOWN,
 		 	w: DIRECTION_UP,
 		 	a: DIRECTION_LEFT,
-		 	d: DIRECTION_RIGHT,
+		 	d: DIRECTION_RIGHT
 		}
 		
 		this.heldDirections = [];

@@ -18,9 +18,28 @@ export class Placement {
 		this.movingPixelDirection = DIRECTION_RIGHT;
 		this.spriteFacingDirection = DIRECTION_RIGHT;
 		this.spriteWalkFrame = 0;
+		
+		this.hasBeenCollected = false;
 	}
 	
 	tick() {}
+	
+	collect() {
+		 this.hasBeenCollected = true;
+	 }
+	
+	isSolidForBody(_body) {
+		 return false;
+	 }
+	 
+	 addsItemToInventoryOnCollide() {
+			return null;
+		}
+		
+		 
+		 completesLevelOnCollide() {
+			 return false;
+		 }
 	
 	displayXY() {
 		if (this.movingPixelsRemaining > 0) {
@@ -48,6 +67,10 @@ export class Placement {
 				
 		}
 	}
+	
+	zIndex() {
+		 return 1;
+	 }
 	
 	renderComponent() {
 		return null;

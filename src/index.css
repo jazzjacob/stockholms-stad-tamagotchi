@@ -1,4 +1,4 @@
-@charset "UTF-8";
+/*@charset "UTF-8";*/
 
 * {
 	box-sizing: border-box;
@@ -27,14 +27,14 @@ canvas {
 }
 
 /* Scale up game art if we can fit it. 2x */
-@media(min-width: 380px) {
+@media(min-width: 200px) {
 	:root {
 		--pixel-size: 2;
 	}
 }
 
 /* 3x */
-@media(min-width: 560px) {
+@media(min-width: 250px) {
 	:root {
 		--pixel-size: 3;
 	}

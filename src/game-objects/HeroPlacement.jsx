@@ -1,13 +1,16 @@
 import { Placement } from './Placement';
 import { TILES } from '../helpers/tiles';
 import Hero from '../components/object-graphics/Hero';
+import { Collision } from "../classes/Collision";
 import {
 	directionUpdateMap,
 	DIRECTION_LEFT,
 	DIRECTION_RIGHT,
 	BODY_SKINS,
 	HERO_RUN_1,
-	HERO_RUN_2
+	HERO_RUN_2,
+	Z_INDEX_LAYER_SIZE,
+	PLACEMENT_TYPE_CELEBRATION,
 } from '../helpers/consts';
 
  const heroSkinMap = {
@@ -50,12 +53,42 @@ export class HeroPlacement extends Placement {
 			return;
 		}
 		
+		//Make sure the next space is available
+		 const canMove = this.canMoveToNextDestination(direction);
+		 if (!canMove) {
+			 return;
+		 }
+		
 		// Start the move
 		this.movingPixelsRemaining = 16;
 		this.movingPixelDirection = direction;	
 		this.updateFacingDirection();
 		this.updateWalkFrame();
 	}
+	
+	canMoveToNextDestination(direction) {
+		 // Is the next space in bounds?
+		 const { x, y } = directionUpdateMap[direction];
+		 	const nextX = this.x + x;
+			const nextY = this.y + y;
+			const isOutOfBounds = this.level.isPositionOutOfBounds(nextX, nextY);
+		 if (isOutOfBounds) {
+			 return false;
+		 }
+	
+		 // Is there a solid thing here?
+ 			const collision = new Collision(this, this.level, {
+				x: nextX,
+				y: nextY,
+			});
+			if (collision.withSolidPlacement()) {
+				return false;
+			}
+		 
+			// Default to allowing move
+	
+		 return true;
+	 }
 	
 	updateFacingDirection() {
 		if (
@@ -92,7 +125,28 @@ export class HeroPlacement extends Placement {
 		const {x,y} = directionUpdateMap[this.movingPixelDirection];
 		this.x += x;
 		this.y += y;
+		this.handleCollisions();
 	}
+	
+	handleCollisions() {
+		// handle collisions!
+		const collision = new Collision(this, this.level);
+		const collideThatAddsToInventory = collision.withPlacementAddsToInventory();
+		if (collideThatAddsToInventory) {
+			collideThatAddsToInventory.collect();
+			this.level.addPlacement({
+				type: PLACEMENT_TYPE_CELEBRATION,
+				x: this.x,
+				y: this.y,
+			});
+		}
+		
+		const completesLevel = collision.withCompletesLevel();
+		if (completesLevel) {
+			this.level.completeLevel();
+		}
+	}
+	
 	
 	getFrame() {
 		// Which frame to show?
@@ -124,6 +178,10 @@ export class HeroPlacement extends Placement {
 		// Highest in the middle of the movement
 		return -2;
 	}
+	
+	zIndex() {
+		 return this.y * Z_INDEX_LAYER_SIZE + 1;
+	 }
 	
 	renderComponent() {
 		const heroFrame = this.level.animatedFrames.gubbeFrame;
