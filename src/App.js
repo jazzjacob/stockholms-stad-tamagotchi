@@ -28,16 +28,7 @@ function App() {
 
   return (
     <div>
-			<MenuRow />
-			{currentView === 0 && (
-				<RenderLevel />
-			)}
-			{currentView === 1 && (
-				<p>View 2</p>
-			)}
-			{currentView === 2 && (
-				<p>View 3</p>
-			)}
+			<RenderLevel />
     </div>
   );
 }
