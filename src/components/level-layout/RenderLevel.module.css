@@ -1,6 +1,7 @@
 .fullScreenContainer {
 	height: 100%;
 	width: 100%;
+	padding: 32px;
 	/*align-items: center;
 	display: flex;*/
 	/*inset: 0;*/ /* What is this? */
@@ -9,10 +10,11 @@
 }
 
 .gameScreen {
-	max-width: 300px;
+	/*max-width: 300px;*/
 	height: fit-content;
-	/*transform: scale(var(--pixel-size));*/
-	outline: 30px solid red;
+	transform: scale(var(--pixel-size));
+	transform-origin: top left;
+	/*outline: 30px solid red;*/
 	display: flex;
 	flex-wrap: wrap;
 }

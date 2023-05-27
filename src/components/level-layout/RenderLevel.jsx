@@ -37,9 +37,15 @@ export default function RenderLevel() {
 	
 	return (
 		<>
-		<div className={styles.fullScreenContainer} style={{
-			backgroundColor: THEME_BACKGROUNDS[level.theme],
-		}}>
+		<div
+			className={styles.fullScreenContainer}
+			style={{
+				backgroundColor: THEME_BACKGROUNDS[level.theme],
+			}}
+		>
+			<p
+				style={{margin: 0}}
+			>hello</p>
 			<div
 				className={styles.gameScreen}
 				style={{
@@ -48,11 +54,11 @@ export default function RenderLevel() {
 			>
 				<LevelBackgroundTilesLayer level={level} />
 				<LevelPlacementsLayer level={level} />
+				{currentLevelId === "DemoLevel2" && (
+					<TextList level={level} />
+				)}
 			</div>
 			<MenuRow />
-			{currentLevelId === "DemoLevel2" && (
-				<TextList />
-			)}
 			{/*<FlourCount level={level} />*/}
 			{level.isCompleted && <LevelCompleteMessage />}
 		</div>

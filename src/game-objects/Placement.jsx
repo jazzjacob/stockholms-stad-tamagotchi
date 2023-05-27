@@ -20,6 +20,7 @@ export class Placement {
 		this.spriteWalkFrame = 0;
 		
 		this.hasBeenCollected = false;
+		this.isDisplayed = true;
 	}
 	
 	tick() {}
@@ -27,6 +28,10 @@ export class Placement {
 	collect() {
 		 this.hasBeenCollected = true;
 	 }
+	 
+	toggleDisplay() {
+		this.hasBeenCollected = !this.hasBeenCollected;
+	}
 	
 	isSolidForBody(_body) {
 		 return false;

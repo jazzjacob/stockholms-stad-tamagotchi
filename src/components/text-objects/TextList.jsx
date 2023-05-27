@@ -4,7 +4,7 @@ import { currentViewAtom } from '../../atoms/currentViewAtom';
 import { currentLevelIdAtom } from '../../atoms/currentLevelIdAtom';
 import LevelsMap from '../../levels/LevelsMap';
 
-export default function TextList() {
+export default function TextList({ level }) {
 	const [currentId, setCurrentId] = useRecoilState(currentLevelIdAtom);
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [navigationStarted, setNavigationStarted] = useState(false);
@@ -41,14 +41,25 @@ export default function TextList() {
 		const nextLevelId = levelsArray[currentIndex + 1] ?? levelsArray[0];*/
 	}
 	
+	function handleArrowDisplay() {
+		level.placements[0].toggleDisplay();
+		console.log(level.placements[0])
+	}
+	
 	return (
 			<>
 				<div style={{
-					height: "fit-content",
-					width: "fit-content",
-					backgroundColor: "lightgray",
-					fontSize: "1.5rem",
-					lineHeight: "2px"
+					height: `${16*5}px`,
+					width: `${16*5}px`,
+					//backgroundColor: "lightgray",
+					fontSize: "0.3rem",
+					lineHeight: "1px",
+					zIndex: 1,
+					position: "absolute",
+					top: `${16*1}px`,
+					left: `${16*1}px`,
+					border: "0.5px solid red",
+					paddingLeft: "2px"
 				}}>
 					{navigationStarted ? (
 						<>
@@ -59,22 +70,21 @@ export default function TextList() {
 						<>
 							{projectList.map((projectItem, index) => {
 								if (index === currentIndex) {
-									return <p>-{projectItem.distance}km {projectItem.name}</p>
+									return <p>>{projectItem.distance}km {projectItem.name}</p>
 								}
 								return <p>{projectItem.distance}km {projectItem.name}</p>
 							})}
-						<div style={{width: "100px", height: "100px", backgroundColor: "lightgray"}}></div>
 						</>
 					)}
 				</div>
 				<div style={{
 					position: "absolute",
-					top: "129px",
-					left: "500px"
+					left: "200px",
 				}}>
 					<p><button onClick={() => handleUpButton()}>↑</button></p>
 					<p><button onClick={() => handleDownButton()}>↓</button></p>
 					<button onClick={() => handleOKButton()}>OK</button>
+					<button onClick={() => handleArrowDisplay()}>Arrow on/off</button>
 				</div>
 			</>
 	)
