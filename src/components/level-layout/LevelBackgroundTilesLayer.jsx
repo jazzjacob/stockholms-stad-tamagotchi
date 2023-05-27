@@ -40,5 +40,5 @@ export default function LevelBackgroundTilesLayer({ level }) {
 		}
 	} 
 	
-	return <div>{canvases}</div>;
+	return <>{canvases}</>;
 }

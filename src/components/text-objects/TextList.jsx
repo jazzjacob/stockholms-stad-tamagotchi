@@ -44,10 +44,9 @@ export default function TextList() {
 	return (
 			<>
 				<div style={{
-					position: "absolute",
+					height: "fit-content",
+					width: "fit-content",
 					backgroundColor: "lightgray",
-					top: "129px",
-					left: "190px",
 					fontSize: "1.5rem",
 					lineHeight: "2px"
 				}}>

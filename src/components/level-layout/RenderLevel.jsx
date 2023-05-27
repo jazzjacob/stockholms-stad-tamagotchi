@@ -40,7 +40,12 @@ export default function RenderLevel() {
 		<div className={styles.fullScreenContainer} style={{
 			backgroundColor: THEME_BACKGROUNDS[level.theme],
 		}}>
-			<div className={styles.gameScreen}>
+			<div
+				className={styles.gameScreen}
+				style={{
+					width: `${16*7}px`
+				}}
+			>
 				<LevelBackgroundTilesLayer level={level} />
 				<LevelPlacementsLayer level={level} />
 			</div>
