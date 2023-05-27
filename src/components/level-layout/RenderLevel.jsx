@@ -5,13 +5,20 @@ import { CELL_SIZE, LEVEL_THEMES, THEME_BACKGROUNDS } from '../../helpers/consts
 import LevelBackgroundTilesLayer from './LevelBackgroundTilesLayer';
 import LevelPlacementsLayer from './LevelPlacementsLayer'
 import { LevelState } from '../../classes/LevelState';
+import MenuRow from '../menu-row/MenuRow';
+import FlourCount from "../hud/FlourCount";
+import LevelCompleteMessage from "../hud/LevelCompleteMessage";
+import { useRecoilValue } from 'recoil';
+import { currentLevelIdAtom } from '../../atoms/currentLevelIdAtom';
+import TextList from '../text-objects/TextList';
 
 export default function RenderLevel() {
 	const [level, setLevel] = useState(null);
+	const currentLevelId = useRecoilValue(currentLevelIdAtom);
 	
 	useEffect(() => {
 		// Create and subscribe to state changes
-		const levelState = new LevelState("1-1", newState => {
+		const levelState = new LevelState(currentLevelId, newState => {
 			setLevel(newState);
 		})
 		
@@ -22,20 +29,28 @@ export default function RenderLevel() {
 		return () => {
 			levelState.destroy();
 		}
-	}, []);
+	}, [currentLevelId]);
 	
 	if (!level) {
 		return null;
 	}
 	
 	return (
+		<>
 		<div className={styles.fullScreenContainer} style={{
-			background: THEME_BACKGROUNDS[level.theme]
+			backgroundColor: THEME_BACKGROUNDS[level.theme],
 		}}>
 			<div className={styles.gameScreen}>
 				<LevelBackgroundTilesLayer level={level} />
 				<LevelPlacementsLayer level={level} />
 			</div>
+			<MenuRow />
+			{currentLevelId === "DemoLevel2" && (
+				<TextList />
+			)}
+			{/*<FlourCount level={level} />*/}
+			{level.isCompleted && <LevelCompleteMessage />}
 		</div>
+		</>
 	);
 }

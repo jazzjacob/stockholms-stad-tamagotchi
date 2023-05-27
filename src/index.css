@@ -1,8 +1,14 @@
-@charset "UTF-8";
+/*@charset "UTF-8";*/
 
 * {
 	box-sizing: border-box;
 }
+
+@font-face {
+		font-family: PixelFont;
+		src: url(../public/Minecraft.ttf);
+}
+	
 
 :root {
 	--game-viewport-width: 176px;
@@ -12,6 +18,8 @@
 }
 
 html, body {
+	font-family: PixelFont;
+	letter-spacing: 1.5px;
 	position: relative;
 	width: 100vw;
 	height: 100vh;
@@ -27,14 +35,14 @@ canvas {
 }
 
 /* Scale up game art if we can fit it. 2x */
-@media(min-width: 380px) {
+@media(min-width: 200px) {
 	:root {
 		--pixel-size: 2;
 	}
 }
 
 /* 3x */
-@media(min-width: 560px) {
+@media(min-width: 250px) {
 	:root {
 		--pixel-size: 3;
 	}

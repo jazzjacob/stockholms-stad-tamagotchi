@@ -1,28 +1,63 @@
 import { Placement } from './Placement';
-import Sprite from '../components/object-graphics/Sprite';
 import { TILES } from '../helpers/tiles';
 import Hero from '../components/object-graphics/Hero';
+import { Collision } from "../classes/Collision";
 import {
 	directionUpdateMap,
 	DIRECTION_LEFT,
 	DIRECTION_RIGHT,
 	BODY_SKINS,
 	HERO_RUN_1,
-	HERO_RUN_2
+	HERO_RUN_2,
+	Z_INDEX_LAYER_SIZE,
+	PLACEMENT_TYPE_CELEBRATION,
 } from '../helpers/consts';
 
  const heroSkinMap = {
-	 [BODY_SKINS.NORMAL]: [TILES.HERO_LEFT, TILES.HERO_RIGHT],
-	 [HERO_RUN_1]: [TILES.HERO_RUN_1_LEFT, TILES.HERO_RUN_1_RIGHT],
-	 [HERO_RUN_2]: [TILES.HERO_RUN_2_LEFT, TILES.HERO_RUN_2_RIGHT],
+	 [BODY_SKINS.NORMAL]: [TILES.GUBBE_1, TILES.GUBBE_1],
+	 [HERO_RUN_1]: [TILES.GUBBE_2, TILES.GUBBE_2],
+	 [HERO_RUN_2]: [TILES.GUBBE_2, TILES.GUBBE_2],
  };
 
 export class HeroPlacement extends Placement {
+	constructor(properties, level) {
+		super(properties, level);	
+		
+		this.tickBetweenMovesInterval = 28;
+		this.ticksUntilNextMove = this.tickBetweenMovesInterval;
+	}
+	
+	tickAttemptAiMove() {
+		if (this.ticksUntilNextMove > 0) {
+			this.ticksUntilNextMove -= 1;
+			return;
+		}
+		this.internalMoveRequested();
+	}
+	
+	internalMoveRequested() {
+		// Attempt to start moving
+		if (this.movingPixelsRemaining > 0) {
+			return;
+		}
+		
+		// Start the move
+		this.ticksUntilNextMove = this.tickBetweenMovesInterval;
+		//this.movingPixelsRemaining = 16;
+		this.getYTranslate();
+	}
+	
 	controllerMoveRequested(direction) {
 		// Attempt to start moving
 		if (this.movingPixelsRemaining > 0) {
 			return;
 		}
+		
+		//Make sure the next space is available
+		 const canMove = this.canMoveToNextDestination(direction);
+		 if (!canMove) {
+			 return;
+		 }
 		
 		// Start the move
 		this.movingPixelsRemaining = 16;
@@ -30,6 +65,30 @@ export class HeroPlacement extends Placement {
 		this.updateFacingDirection();
 		this.updateWalkFrame();
 	}
+	
+	canMoveToNextDestination(direction) {
+		 // Is the next space in bounds?
+		 const { x, y } = directionUpdateMap[direction];
+		 	const nextX = this.x + x;
+			const nextY = this.y + y;
+			const isOutOfBounds = this.level.isPositionOutOfBounds(nextX, nextY);
+		 if (isOutOfBounds) {
+			 return false;
+		 }
+	
+		 // Is there a solid thing here?
+ 			const collision = new Collision(this, this.level, {
+				x: nextX,
+				y: nextY,
+			});
+			if (collision.withSolidPlacement()) {
+				return false;
+			}
+		 
+			// Default to allowing move
+	
+		 return true;
+	 }
 	
 	updateFacingDirection() {
 		if (
@@ -46,6 +105,7 @@ export class HeroPlacement extends Placement {
 	
 	tick() {
 		this.tickMovingPixelProgress();
+		this.tickAttemptAiMove();
 	}
 	
 	tickMovingPixelProgress() {
@@ -65,7 +125,28 @@ export class HeroPlacement extends Placement {
 		const {x,y} = directionUpdateMap[this.movingPixelDirection];
 		this.x += x;
 		this.y += y;
+		this.handleCollisions();
 	}
+	
+	handleCollisions() {
+		// handle collisions!
+		const collision = new Collision(this, this.level);
+		const collideThatAddsToInventory = collision.withPlacementAddsToInventory();
+		if (collideThatAddsToInventory) {
+			collideThatAddsToInventory.collect();
+			this.level.addPlacement({
+				type: PLACEMENT_TYPE_CELEBRATION,
+				x: this.x,
+				y: this.y,
+			});
+		}
+		
+		const completesLevel = collision.withCompletesLevel();
+		if (completesLevel) {
+			this.level.completeLevel();
+		}
+	}
+	
 	
 	getFrame() {
 		// Which frame to show?
@@ -98,7 +179,12 @@ export class HeroPlacement extends Placement {
 		return -2;
 	}
 	
+	zIndex() {
+		 return this.y * Z_INDEX_LAYER_SIZE + 1;
+	 }
+	
 	renderComponent() {
-		return <Hero frameCoord={this.getFrame()} yTranslate={this.getYTranslate()} />;
+		const heroFrame = this.level.animatedFrames.gubbeFrame;
+		return <Hero frameCoord={heroFrame} yTranslate={this.getYTranslate()} />;
 	}
 }
