@@ -8,14 +8,10 @@
  
  const level = {
 	 theme: LEVEL_THEMES.PINK,
-	 tilesWidth: 8,
+	 tilesWidth: 5,
 	 tilesHeight: 5,
 	 placements: [
-		 { x: 1, y: 1, type: PLACEMENT_TYPE_HERO },
-		 { x: 7, y: 5, type: PLACEMENT_TYPE_GOAL },
-		 { x: 4, y: 4, type: PLACEMENT_TYPE_WALL },
-		 { x: 3, y: 2, type: PLACEMENT_TYPE_FLOUR },
-		 { x: 6, y: 4, type: PLACEMENT_TYPE_FLOUR },
+		 { x: 4, y: 4, type: PLACEMENT_TYPE_HERO },
 	 ],
  };
  

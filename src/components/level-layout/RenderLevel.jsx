@@ -10,6 +10,7 @@ import FlourCount from "../hud/FlourCount";
 import LevelCompleteMessage from "../hud/LevelCompleteMessage";
 import { useRecoilValue } from 'recoil';
 import { currentLevelIdAtom } from '../../atoms/currentLevelIdAtom';
+import TextList from '../text-objects/TextList';
 
 export default function RenderLevel() {
 	const [level, setLevel] = useState(null);
@@ -37,14 +38,17 @@ export default function RenderLevel() {
 	return (
 		<>
 		<div className={styles.fullScreenContainer} style={{
-			backgroundColor: THEME_BACKGROUNDS[level.theme]
+			backgroundColor: THEME_BACKGROUNDS[level.theme],
 		}}>
 			<div className={styles.gameScreen}>
 				<LevelBackgroundTilesLayer level={level} />
 				<LevelPlacementsLayer level={level} />
 			</div>
 			<MenuRow />
-			<FlourCount level={level} />
+			{currentLevelId === "DemoLevel2" && (
+				<TextList />
+			)}
+			{/*<FlourCount level={level} />*/}
 			{level.isCompleted && <LevelCompleteMessage />}
 		</div>
 		</>

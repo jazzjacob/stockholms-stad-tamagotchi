@@ -1,12 +1,13 @@
 export const CELL_SIZE = 16;
  export const Z_INDEX_LAYER_SIZE = 10;
-export const SPRITE_SHEET_SRC = '/ciabattas-revenge-sprites-2.png';
+export const SPRITE_SHEET_SRC = '/ciabattas-revenge-sprites-with-arrows.png';
 
 export const PLACEMENT_TYPE_HERO = "HERO";
 export const PLACEMENT_TYPE_GOAL = "GOAL";
  export const PLACEMENT_TYPE_WALL = "WALL";
  export const PLACEMENT_TYPE_FLOUR = "FLOUR";
  export const PLACEMENT_TYPE_CELEBRATION = "CELEBRATION";
+ export const PLACEMENT_TYPE_ARROW = "ARROW";
 
 export const DIRECTION_LEFT = "LEFT";
 export const DIRECTION_RIGHT = "RIGHT";
@@ -48,6 +49,10 @@ export const THEME_BACKGROUNDS = {
 	[LEVEL_THEMES.PINK]: "#673d5e",
 	[LEVEL_THEMES.GRAY]: "#96a1c7",
 };
+
+export const ARROW_TILES_MAP = {
+	UP: "0x21",
+}
 
 export const THEME_TILES_MAP = {
 	[LEVEL_THEMES.YELLOW]: {

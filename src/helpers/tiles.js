@@ -134,5 +134,8 @@
 	 // MY OWN CHARACTERS
 		GUBBE_1: "0x19",
 		GUBBE_2: "2x19",
-		GUBBE_3: "4x19"
+		GUBBE_3: "4x19",
+		
+		ARROW_UP: "0x21",
+		ARROW_DOWN: "1x21"		
  };
