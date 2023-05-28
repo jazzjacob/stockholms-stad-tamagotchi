@@ -29,6 +29,10 @@ export class Placement {
 		 this.hasBeenCollected = true;
 	 }
 	 
+	unCollect() {
+		this.hasBeenCollected = false;
+	}
+	 
 	toggleDisplay() {
 		this.hasBeenCollected = !this.hasBeenCollected;
 	}

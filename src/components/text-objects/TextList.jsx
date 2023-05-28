@@ -16,6 +16,10 @@ export default function TextList({ level }) {
 	];
 	
 	useEffect(() => {
+		console.log(level.placements)
+		//if (!level.placements[0].hasBeenCollected) {
+			//level.placements[0].unCollect();			
+		//}
 		setCurrentIndex(0);
 	}, []);
 	
@@ -32,7 +36,7 @@ export default function TextList({ level }) {
 	function handleOKButton() {
 		console.log(projectList[currentIndex])
 		setNavigationStarted(!navigationStarted);
-		
+		level.placements[0].toggleDisplay();
 		// Go to Active Level
 		/*const levelsArray = Object.keys(LevelsMap);
 		const currentIndex = levelsArray.findIndex(id => {
@@ -44,6 +48,11 @@ export default function TextList({ level }) {
 	function handleArrowDisplay() {
 		level.placements[0].toggleDisplay();
 		console.log(level.placements[0])
+	}
+	
+	function handleArrowDirection() {
+		console.log("Changing arrow directions...")
+		level.placements[0].changeArrowDirection("UP");
 	}
 	
 	return (
@@ -85,6 +94,7 @@ export default function TextList({ level }) {
 					<p><button onClick={() => handleDownButton()}>↓</button></p>
 					<button onClick={() => handleOKButton()}>OK</button>
 					<button onClick={() => handleArrowDisplay()}>Arrow on/off</button>
+					<button onClick={() => handleArrowDirection()}>Arrow direction</button>
 				</div>
 			</>
 	)
