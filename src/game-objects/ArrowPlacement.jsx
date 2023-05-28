@@ -13,15 +13,8 @@ export class ArrowPlacement extends Placement {
 		return true;
 	}
 	
-	changeArrowDirection(direction) {
-		switch (this.arrowTileCoord) {
-			case ARROW_TILES_MAP.UP:
-				this.arrowTileCoord = ARROW_TILES_MAP.DOWN;
-				break;
-			case ARROW_TILES_MAP.DOWN:
-				this.arrowTileCoord = ARROW_TILES_MAP.UP;
-				break;
-		}
+	setArrowDirection(direction) {
+		this.arrowTileCoord = ARROW_TILES_MAP[direction];
 	}
  
 	renderComponent() {

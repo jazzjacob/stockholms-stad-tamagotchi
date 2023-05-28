@@ -52,7 +52,13 @@ export const THEME_BACKGROUNDS = {
 
 export const ARROW_TILES_MAP = {
 	UP: "0x21",
-	DOWN: "1x21"
+	DOWN: "1x21",
+	LEFT: "2x21",
+	RIGHT: "3x21",
+	UP_RIGHT: "4x21",
+	UP_LEFT: "5x21",
+	DOWN_RIGHT: "6x21",
+	DOWN_LEFT: "7x21",
 }
 
 export const THEME_TILES_MAP = {

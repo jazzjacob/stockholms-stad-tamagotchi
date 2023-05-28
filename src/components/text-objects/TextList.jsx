@@ -3,11 +3,13 @@ import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import { currentViewAtom } from '../../atoms/currentViewAtom';
 import { currentLevelIdAtom } from '../../atoms/currentLevelIdAtom';
 import LevelsMap from '../../levels/LevelsMap';
+import { ARROW_TILES_MAP } from '../../helpers/consts';
 
 export default function TextList({ level }) {
 	const [currentId, setCurrentId] = useRecoilState(currentLevelIdAtom);
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [navigationStarted, setNavigationStarted] = useState(false);
+	const [currentArrowIndex, setCurrentArrowIndex] = useState(0);
 	
 	const projectList = [
 		{name: "Slussen", distance: 0.1},
@@ -51,8 +53,17 @@ export default function TextList({ level }) {
 	}
 	
 	function handleArrowDirection() {
+		const array = Object.keys(ARROW_TILES_MAP);
 		console.log("Changing arrow directions...")
-		level.placements[0].changeArrowDirection("UP");
+		console.log(currentArrowIndex);
+		level.placements[0].setArrowDirection(array[currentArrowIndex]);
+		if (currentArrowIndex === array.length - 1) {
+			console.log("HELLO")
+			setCurrentArrowIndex(0);
+		} else {
+			console.log("THERE")
+			setCurrentArrowIndex(currentArrowIndex + 1);
+		}
 	}
 	
 	return (
