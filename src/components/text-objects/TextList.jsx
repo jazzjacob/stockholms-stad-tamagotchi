@@ -12,9 +12,9 @@ export default function TextList({ level }) {
 	const [currentArrowIndex, setCurrentArrowIndex] = useState(0);
 	
 	const projectList = [
-		{name: "Slussen", distance: 0.1},
-		{name: "Albano", distance: 4},
-		{name: "Kista", distance: 7},
+		{name: "Slussen", distance: 0.1, direction: "DOWN_RIGHT"},
+		{name: "Albano", distance: 4, direction: "UP"},
+		{name: "Kista", distance: 7, direction: "UP_LEFT"},
 	];
 	
 	useEffect(() => {
@@ -28,17 +28,21 @@ export default function TextList({ level }) {
 	function handleUpButton() {
 		const nextIndex = currentIndex - 1 < 0 ? projectList.length - 1 : currentIndex - 1;
 		setCurrentIndex(nextIndex);
+		level.placements[0].setArrowDirection(projectList[nextIndex].direction);
 	}
 	
 	function handleDownButton() {
 		const nextIndex = currentIndex + 1 > projectList.length - 1 ? 0 : currentIndex + 1;
 		setCurrentIndex(nextIndex);
+		level.placements[0].setArrowDirection(projectList[nextIndex].direction);
 	}
 	
 	function handleOKButton() {
 		console.log(projectList[currentIndex])
+		
 		setNavigationStarted(!navigationStarted);
-		level.placements[0].toggleDisplay();
+		level.placements[0].unCollect();
+		level.placements[0].setArrowDirection(projectList[currentIndex].direction);
 		// Go to Active Level
 		/*const levelsArray = Object.keys(LevelsMap);
 		const currentIndex = levelsArray.findIndex(id => {
