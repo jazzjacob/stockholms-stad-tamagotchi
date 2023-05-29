@@ -1,11 +1,14 @@
 import { useState, useRef, useEffect } from 'react';
+import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
+import { mapDataAtom } from '../../atoms/mapDataAtom';
 
 export default function Map() {
 	const [coordinates, setCoordinates] = useState({x: 0, y: 0});
 	const [centerPointCoordinates, setCenterPointCoordinates] = useState({x: 0, y: 0});
 	const [relativeCoordinates, setRelativeCoordinates] = useState({x: 0, y: 0});
+	const [direction, setDirection] = useState(null);
 	
-	const [direction, setDirection] = useState("NO DIRECTION SET");
+	const [mapData, setMapData] = useRecoilState(mapDataAtom);
 	
 	const centerPointRef = useRef();
 	
@@ -21,11 +24,21 @@ export default function Map() {
 		});
 	}, []);
 	
+	useEffect(() => {
+		if (direction !== null) {
+			setMapData({
+				x: relativeCoordinates.x,
+				y: relativeCoordinates.y,
+				direction: direction
+			});
+		}
+	}, [relativeCoordinates]);
+	
 	function handleMouseMove(e) {
 		// Offset to center of point
 		const centerPoint = centerPointRef.current;
-		console.dir(centerPoint.offsetLeft + (centerPoint.offsetWidth / 2));
-		console.dir(centerPoint.offsetTop + (centerPoint.offsetHeight / 2));
+		//console.dir(centerPoint.offsetLeft + (centerPoint.offsetWidth / 2));
+		//console.dir(centerPoint.offsetTop + (centerPoint.offsetHeight / 2));
 		setCoordinates({x: e.clientX, y: e.clientY});
 		
 		const relativeX = e.clientX - centerPointCoordinates.x;
@@ -77,7 +90,7 @@ export default function Map() {
 			<p>
 				Relative X: {relativeCoordinates.x} - Relative Y: {relativeCoordinates.y}
 			</p>
-			<p>{direction}</p>
+			<p>{!direction ? "NO DIRECTION SET":  direction}</p>
 			<div
 			onMouseMove={(e) => handleMouseMove(e)}
 			style={{

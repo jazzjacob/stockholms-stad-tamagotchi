@@ -4,6 +4,8 @@ import { currentViewAtom } from '../../atoms/currentViewAtom';
 import { currentLevelIdAtom } from '../../atoms/currentLevelIdAtom';
 import LevelsMap from '../../levels/LevelsMap';
 import { ARROW_TILES_MAP } from '../../helpers/consts';
+import { mapDataAtom } from '../../atoms/mapDataAtom';
+
 
 export default function TextList({ level }) {
 	const [currentId, setCurrentId] = useRecoilState(currentLevelIdAtom);
@@ -11,11 +13,20 @@ export default function TextList({ level }) {
 	const [navigationStarted, setNavigationStarted] = useState(false);
 	const [currentArrowIndex, setCurrentArrowIndex] = useState(0);
 	
+	const mapData = useRecoilValue(mapDataAtom);
+	
 	const projectList = [
 		{name: "Slussen", distance: 0.1, direction: "DOWN_RIGHT"},
 		{name: "Albano", distance: 4, direction: "UP"},
 		{name: "Kista", distance: 7, direction: "UP_LEFT"},
 	];
+	
+	useEffect(() => {
+		if (!mapData) {
+			//console.log(mapData)
+		}
+		//console.log(mapData)
+	}, [mapData]);
 	
 	useEffect(() => {
 		console.log(level.placements)
@@ -99,6 +110,9 @@ export default function TextList({ level }) {
 								return <p>{projectItem.distance}km {projectItem.name}</p>
 							})}
 						</>
+					)}
+					{ mapData && (
+						<p style={{marginTop: "12px"}}>{mapData.direction}</p>						
 					)}
 				</div>
 				<div style={{
