@@ -11,6 +11,7 @@ import LevelCompleteMessage from "../hud/LevelCompleteMessage";
 import { useRecoilValue } from 'recoil';
 import { currentLevelIdAtom } from '../../atoms/currentLevelIdAtom';
 import TextList from '../text-objects/TextList';
+import Map from '../map/Map';
 
 export default function RenderLevel() {
 	const [level, setLevel] = useState(null);
@@ -58,6 +59,7 @@ export default function RenderLevel() {
 					<TextList level={level} />
 				)}
 			</div>
+			<Map />
 			<MenuRow />
 			{/*<FlourCount level={level} />*/}
 			{level.isCompleted && <LevelCompleteMessage />}
