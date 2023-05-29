@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import { currentViewAtom } from '../../atoms/currentViewAtom';
 import { currentLevelIdAtom } from '../../atoms/currentLevelIdAtom';
@@ -12,8 +12,10 @@ export default function TextList({ level }) {
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [navigationStarted, setNavigationStarted] = useState(false);
 	const [currentArrowIndex, setCurrentArrowIndex] = useState(0);
+	const previousDirection = useRef(null);
 	
 	const mapData = useRecoilValue(mapDataAtom);
+	const array = Object.keys(ARROW_TILES_MAP);
 	
 	const projectList = [
 		{name: "Slussen", distance: 0.1, direction: "DOWN_RIGHT"},
@@ -22,8 +24,12 @@ export default function TextList({ level }) {
 	];
 	
 	useEffect(() => {
-		if (!mapData) {
-			//console.log(mapData)
+		if (mapData) {
+			console.log(previousDirection.current)
+			if (previousDirection.current !== mapData.direction) {
+				level.placements[0].setArrowDirection(array[mapData.direction - 1]);
+			}
+			previousDirection.current = mapData.direction;
 		}
 		//console.log(mapData)
 	}, [mapData]);
@@ -68,7 +74,6 @@ export default function TextList({ level }) {
 	}
 	
 	function handleArrowDirection() {
-		const array = Object.keys(ARROW_TILES_MAP);
 		console.log("Changing arrow directions...")
 		console.log(currentArrowIndex);
 		level.placements[0].setArrowDirection(array[currentArrowIndex]);
