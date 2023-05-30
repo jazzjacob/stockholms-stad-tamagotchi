@@ -5,23 +5,64 @@ import { currentLevelIdAtom } from '../../atoms/currentLevelIdAtom';
 import LevelsMap from '../../levels/LevelsMap';
 import { ARROW_TILES_MAP } from '../../helpers/consts';
 import { mapDataAtom } from '../../atoms/mapDataAtom';
+import { defaultValuesAtom } from '../../atoms/defaultValuesAtom';
 
 
 export default function TextList({ level }) {
 	const [currentId, setCurrentId] = useRecoilState(currentLevelIdAtom);
+	const [defaultValues, setDefaultValues] = useRecoilState(defaultValuesAtom);
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [navigationStarted, setNavigationStarted] = useState(false);
 	const [currentArrowIndex, setCurrentArrowIndex] = useState(0);
 	const previousDirection = useRef(null);
 	
-	const mapData = useRecoilValue(mapDataAtom);
+	//const mapData = useRecoilValue(mapDataAtom);
+	const [mapData, setMapData] = useRecoilState(mapDataAtom);
 	const array = Object.keys(ARROW_TILES_MAP);
 	
 	const projectList = [
-		{name: "Slussen", distance: 0.1, direction: "DOWN_RIGHT"},
-		{name: "Albano", distance: 4, direction: "UP"},
-		{name: "Kista", distance: 7, direction: "UP_LEFT"},
+		{name: "Slussen", listedDefaultDistance: 0.1, defaultDistance: 144, direction: "DOWN_RIGHT", scale: 2},
+		{name: "Albano", listedDefaultDistance: 4, defaultDistance: 417,direction: "UP", scale: 4},
+		{name: "Kista", listedDefaultDistance: 7, defaultDistance: 732, direction: "UP_LEFT", scale: 6},
 	];
+	
+	useEffect(() => {
+		console.log(level.placements)
+		//if (!level.placements[0].hasBeenCollected) {
+			//level.placements[0].unCollect();			
+		//}
+		setCurrentIndex(0);
+		setDefaultValues({
+			distance: projectList[0].defaultDistance,
+			direction: projectList[0].direction,
+			scale: projectList[0].scale
+		});
+	}, []);
+	
+	useEffect(() => {
+		setDefaultValues({
+			distance: projectList[currentIndex].defaultDistance,
+			direction: projectList[currentIndex].direction,
+			scale: projectList[currentIndex].scale
+		});
+	}, [currentIndex])
+	
+	useEffect(() => {
+		if (mapData) {
+			//console.log(previousDirection.current)
+			if (previousDirection.current !== mapData.direction) {
+				//level.placements[0].setArrowDirection("UP");
+				level.placements[0].setArrowDirection(getArrowIndexFromDirection(mapData.direction));
+				//level.placements[0].setArrowDirection(array[mapData.direction - 1]);
+				console.log(array[mapData.direction - 1]);
+				console.log("EY YO")
+			}
+			previousDirection.current = mapData.direction;
+		} else if (defaultValues) {
+			level.placements[0].setArrowDirection(defaultValues.direction)
+		}
+		//console.log(mapData)
+	}, [mapData]);
 	
 	function getArrowIndexFromDirection(direction) {
 		switch (direction) {
@@ -43,29 +84,6 @@ export default function TextList({ level }) {
 				return "DOWN";
 		}
 	}
-	
-	useEffect(() => {
-		if (mapData) {
-			//console.log(previousDirection.current)
-			if (previousDirection.current !== mapData.direction) {
-				//level.placements[0].setArrowDirection("UP");
-				level.placements[0].setArrowDirection(getArrowIndexFromDirection(mapData.direction));
-				//level.placements[0].setArrowDirection(array[mapData.direction - 1]);
-				console.log(array[mapData.direction - 1]);
-				console.log("EY YO")
-			}
-			previousDirection.current = mapData.direction;
-		}
-		//console.log(mapData)
-	}, [mapData]);
-	
-	useEffect(() => {
-		console.log(level.placements)
-		//if (!level.placements[0].hasBeenCollected) {
-			//level.placements[0].unCollect();			
-		//}
-		setCurrentIndex(0);
-	}, []);
 	
 	function handleUpButton() {
 		const nextIndex = currentIndex - 1 < 0 ? projectList.length - 1 : currentIndex - 1;
@@ -129,22 +147,22 @@ export default function TextList({ level }) {
 					{navigationStarted ? (
 						<>
 							<p>{projectList[currentIndex].name}</p>
-							<div style={{ marginBottom: "42px"}}>{projectList[currentIndex].distance} km</div>
+							<div>{projectList[currentIndex].listedDefaultDistance} km</div>
 						</>
 					) : (
 						<>
 							{projectList.map((projectItem, index) => {
 								if (index === currentIndex) {
-									return <p>>{projectItem.distance}km {projectItem.name}</p>
+									return <p>>{projectItem.listedDefaultDistance}km {projectItem.name}</p>
 								}
-								return <p>{projectItem.distance}km {projectItem.name}</p>
+								return <p>{projectItem.listedDefaultDistance}km {projectItem.name}</p>
 							})}
 						</>
 					)}
 					{ mapData && (
 						<>
 							<p style={{marginTop: "12px"}}>{mapData.direction}</p>
-							<p>Distance: {mapData.distance * 3} m</p>
+							<p>Distance: {mapData.distance ? mapData.distance * defaultValues.scale : defaultValues.distance} m</p>
 						</>
 					)}
 				</div>

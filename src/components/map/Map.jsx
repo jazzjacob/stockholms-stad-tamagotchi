@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import { mapDataAtom } from '../../atoms/mapDataAtom';
+import { defaultValuesAtom } from '../../atoms/defaultValuesAtom';
 
 export default function Map() {
 	const [coordinates, setCoordinates] = useState({x: 0, y: 0});
@@ -10,6 +11,7 @@ export default function Map() {
 	const [hypotenuse, setHypotenuse] = useState(null);
 	
 	const [mapData, setMapData] = useRecoilState(mapDataAtom);
+	const defaultValues = useRecoilValue(defaultValuesAtom);
 	
 	const centerPointRef = useRef();
 	
@@ -31,7 +33,8 @@ export default function Map() {
 				x: relativeCoordinates.x,
 				y: relativeCoordinates.y,
 				direction: direction,
-				distance: hypotenuse
+				distance: hypotenuse,
+				defaultDistance: null
 			});
 		}
 	}, [relativeCoordinates]);
@@ -82,7 +85,18 @@ export default function Map() {
 		} else {
 			setDirection("UP")
 		}*/
-		
+	}
+	
+	function handleMouseEnter() {
+		console.log("MOUSE ENTER")
+	}
+	
+	function handleMouseLeave() {
+		console.log("MOUSE LEAVE")
+		setMapData(null)
+		setCoordinates({x: 0, y: 0})
+		setRelativeCoordinates({x: 0, y: 0})
+		setHypotenuse(0)
 	}
 	
 	return (
@@ -96,19 +110,24 @@ export default function Map() {
 			<p>
 				Hypotenuse: {hypotenuse ? hypotenuse : "NO HYPETUNUSE SET"}
 			</p>
+			<p>
+				Current default distance: {defaultValues ? defaultValues.distance : "NO DEFAULT"}
+			</p>
 			<p>{!direction ? "NO DIRECTION SET":  direction}</p>
 			<div
-			onMouseMove={(e) => handleMouseMove(e)}
-			style={{
-				width: "400px",
-				height: "400px",
-				backgroundColor: "dodgerblue",
-				border: "2px solid white",
-				outline: "1px solid gray",
-				display: "flex",
-				alignItems: "center",
-				justifyContent: "center"
-			}}>
+				onMouseMove={(e) => handleMouseMove(e)}
+				onMouseEnter={() => handleMouseEnter()}
+				onMouseLeave={() => handleMouseLeave()}
+				style={{
+					width: "400px",
+					height: "400px",
+					backgroundColor: "dodgerblue",
+					border: "2px solid white",
+					outline: "1px solid gray",
+					display: "flex",
+					alignItems: "center",
+					justifyContent: "center"
+				}}>
 				<div
 					ref={centerPointRef}
 					style={{
