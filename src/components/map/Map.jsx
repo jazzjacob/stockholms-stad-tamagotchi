@@ -97,6 +97,7 @@ export default function Map() {
 		setCoordinates({x: 0, y: 0})
 		setRelativeCoordinates({x: 0, y: 0})
 		setHypotenuse(0)
+		setDirection(0)
 	}
 	
 	return (

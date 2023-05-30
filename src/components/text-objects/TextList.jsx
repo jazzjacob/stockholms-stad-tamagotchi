@@ -49,17 +49,19 @@ export default function TextList({ level }) {
 	
 	useEffect(() => {
 		if (mapData) {
-			//console.log(previousDirection.current)
-			if (previousDirection.current !== mapData.direction && level.placements[0].type === "ARROW") {
+			
+			if ((previousDirection.current !== mapData.direction) && level.placements[0].type === "ARROW" && mapData.direction !== 0) {
+				console.log("Current: ", previousDirection.current)
+				console.log("MapData: ", mapData.direction)
 				//level.placements[0].setArrowDirection("UP");
-				console.log(level.placements[0])
+				console.log("Mapdata direction")
+				console.log(mapData.direction)
 				level.placements[0].setArrowDirection(getArrowIndexFromDirection(mapData.direction));
 				//level.placements[0].setArrowDirection(array[mapData.direction - 1]);
-				console.log(array[mapData.direction - 1]);
-				console.log("EY YO")
 			}
 			previousDirection.current = mapData.direction;
 		} else if (defaultValues && level.placements[0].type === "ARROW") {
+			console.log("changing to default direction value")
 			level.placements[0].setArrowDirection(defaultValues.direction)
 		}
 		//console.log(mapData)
