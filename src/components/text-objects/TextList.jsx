@@ -23,11 +23,36 @@ export default function TextList({ level }) {
 		{name: "Kista", distance: 7, direction: "UP_LEFT"},
 	];
 	
+	function getArrowIndexFromDirection(direction) {
+		switch (direction) {
+			case "1":
+				return "DOWN_LEFT";
+			case "2":
+			return "LEFT";
+			case "3":
+			return "UP_LEFT";
+			case "4":
+			return "UP";
+			case "5":
+			return "UP_RIGHT";
+			case "6":
+			return "RIGHT";
+			case "7":
+				return "DOWN_RIGHT";
+			default:
+				return "DOWN";
+		}
+	}
+	
 	useEffect(() => {
 		if (mapData) {
-			console.log(previousDirection.current)
+			//console.log(previousDirection.current)
 			if (previousDirection.current !== mapData.direction) {
-				level.placements[0].setArrowDirection(array[mapData.direction - 1]);
+				//level.placements[0].setArrowDirection("UP");
+				level.placements[0].setArrowDirection(getArrowIndexFromDirection(mapData.direction));
+				//level.placements[0].setArrowDirection(array[mapData.direction - 1]);
+				console.log(array[mapData.direction - 1]);
+				console.log("EY YO")
 			}
 			previousDirection.current = mapData.direction;
 		}
