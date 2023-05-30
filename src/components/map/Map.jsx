@@ -7,6 +7,7 @@ export default function Map() {
 	const [centerPointCoordinates, setCenterPointCoordinates] = useState({x: 0, y: 0});
 	const [relativeCoordinates, setRelativeCoordinates] = useState({x: 0, y: 0});
 	const [direction, setDirection] = useState(null);
+	const [hypotenuse, setHypotenuse] = useState(null);
 	
 	const [mapData, setMapData] = useRecoilState(mapDataAtom);
 	
@@ -29,7 +30,8 @@ export default function Map() {
 			setMapData({
 				x: relativeCoordinates.x,
 				y: relativeCoordinates.y,
-				direction: direction
+				direction: direction,
+				distance: hypotenuse
 			});
 		}
 	}, [relativeCoordinates]);
@@ -44,6 +46,7 @@ export default function Map() {
 		const relativeX = e.clientX - centerPointCoordinates.x;
 		const relativeY = centerPointCoordinates.y - e.clientY;
 		setRelativeCoordinates({x: relativeX, y: relativeY});
+		setHypotenuse(Math.floor(Math.hypot(relativeX, relativeY)));
 		
 		const currentSlope = relativeY / relativeX;
 		
@@ -89,6 +92,9 @@ export default function Map() {
 			</p>
 			<p>
 				Relative X: {relativeCoordinates.x} - Relative Y: {relativeCoordinates.y}
+			</p>
+			<p>
+				Hypotenuse: {hypotenuse ? hypotenuse : "NO HYPETUNUSE SET"}
 			</p>
 			<p>{!direction ? "NO DIRECTION SET":  direction}</p>
 			<div

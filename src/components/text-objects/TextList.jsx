@@ -142,7 +142,10 @@ export default function TextList({ level }) {
 						</>
 					)}
 					{ mapData && (
-						<p style={{marginTop: "12px"}}>{mapData.direction}</p>						
+						<>
+							<p style={{marginTop: "12px"}}>{mapData.direction}</p>
+							<p>Distance: {mapData.distance * 3} m</p>
+						</>
 					)}
 				</div>
 				<div style={{
