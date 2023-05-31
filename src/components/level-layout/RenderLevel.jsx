@@ -8,14 +8,14 @@ import { LevelState } from '../../classes/LevelState';
 import MenuRow from '../menu-row/MenuRow';
 import FlourCount from "../hud/FlourCount";
 import LevelCompleteMessage from "../hud/LevelCompleteMessage";
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import { currentLevelIdAtom } from '../../atoms/currentLevelIdAtom';
 import TextList from '../text-objects/TextList';
 import Map from '../map/Map';
 
 export default function RenderLevel() {
 	const [level, setLevel] = useState(null);
-	const currentLevelId = useRecoilValue(currentLevelIdAtom);
+	const [currentLevelId, setCurrentLevelId] = useRecoilState(currentLevelIdAtom);
 	
 	useEffect(() => {
 		// Create and subscribe to state changes
@@ -36,6 +36,16 @@ export default function RenderLevel() {
 		return null;
 	}
 	
+	function toggleLevel() {
+		console.log("Toggling level")
+		if (currentLevelId == "DemoLevel1") {
+			setCurrentLevelId("DemoLevel3");
+		} else {
+			setCurrentLevelId("DemoLevel1");
+		}
+		console.log(currentLevelId)	
+	}
+	
 	return (
 		<>
 		<div
@@ -46,7 +56,8 @@ export default function RenderLevel() {
 		>
 			<p
 				style={{margin: 0}}
-			>hello</p>
+			>Current level: {currentLevelId}</p>
+			<button onClick={() => toggleLevel()} style={{width: "100px", marginBottom: "12px"}}>Change level</button>
 			<div
 				className={styles.gameScreen}
 				style={{
