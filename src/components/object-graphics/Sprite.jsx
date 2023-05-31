@@ -39,7 +39,7 @@ function Sprite({ frameCoord, size = 16 }) {
 		height={size}
 		ref={canvasRef}
 		style={{
-			outline: "1px solid blue",
+			//outline: "1px solid blue",
 			marginBottom: "0",
 			padding: 0
 		}}

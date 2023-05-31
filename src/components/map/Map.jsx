@@ -102,7 +102,7 @@ export default function Map() {
 	
 	return (
 		<div style={{marginTop: "280px"}}>
-			<p style={{color: "white", zIndex: 100}}>
+			{/*<p style={{color: "white", zIndex: 100}}>
 				x:{coordinates.x} - y:{coordinates.y} - Center X:{centerPointCoordinates.x} - Center Y: {centerPointCoordinates.y}
 			</p>
 			<p>
@@ -115,6 +115,8 @@ export default function Map() {
 				Current default distance: {defaultValues ? defaultValues.distance : "NO DEFAULT"}
 			</p>
 			<p>{!direction ? "NO DIRECTION SET":  direction}</p>
+			*/}
+			<p>Moving on map simulation</p>
 			<div
 				onMouseMove={(e) => handleMouseMove(e)}
 				onMouseEnter={() => handleMouseEnter()}

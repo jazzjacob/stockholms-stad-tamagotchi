@@ -144,7 +144,7 @@ export default function TextList({ level }) {
 					position: "absolute",
 					top: `${16*1}px`,
 					left: `${16*1}px`,
-					border: "0.5px solid red",
+					//border: "0.5px solid red",
 					paddingLeft: "2px"
 				}}>
 					{navigationStarted ? (
@@ -171,7 +171,8 @@ export default function TextList({ level }) {
 				</div>
 				<div style={{
 					position: "absolute",
-					left: "200px",
+					left: "120px",
+					transform: 'scale(0.6)'
 				}}>
 					<p><button onClick={() => handleUpButton()}>↑</button></p>
 					<p><button onClick={() => handleDownButton()}>↓</button></p>

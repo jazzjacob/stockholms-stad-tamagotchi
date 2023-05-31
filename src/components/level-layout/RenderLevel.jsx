@@ -106,7 +106,12 @@ export default function RenderLevel() {
 				style={{margin: 0}}
 			>Current level: {currentLevelId}</p>
 			{(currentLevelId === "DemoLevel1" || currentLevelId === "DemoLevel3") && (	
-				<button onClick={() => toggleLevel()} style={{width: "100px", marginBottom: "12px"}}>Toggle level</button>
+				<button
+					onClick={() => toggleLevel()}
+					style={{width: "100px", marginBottom: "12px"}}
+				>
+					{currentLevelId === "DemoLevel1" ? 'Simulate notification' : 'Return'}
+				</button>
 			)}
 			<p>{notificationSteps !== null && notificationSteps}</p>
 			<div
@@ -199,7 +204,7 @@ export default function RenderLevel() {
 						}}
 					>
 						------ DIN LISTA ------
-						{0 < savedProjects.length && (
+						{0 < savedProjects.length ? (
 							<ul style={{ listStyle: 'none', padding: 0, fontSize: '4px'}}>
 								{savedProjects.map((project) => {
 									return (
@@ -210,6 +215,8 @@ export default function RenderLevel() {
 										</li>);
 								})}
 							</ul>
+						) : (
+							<p>No projects saved</p>
 						)}
 					</div>
 				)}
@@ -217,7 +224,7 @@ export default function RenderLevel() {
 			<Map />
 			<MenuRow />
 			{/*<FlourCount level={level} />*/}
-			{level.isCompleted && <LevelCompleteMessage />}
+			{/*level.isCompleted && <LevelCompleteMessage />*/}
 		</div>
 		</>
 	);
