@@ -10,12 +10,14 @@ import FlourCount from "../hud/FlourCount";
 import LevelCompleteMessage from "../hud/LevelCompleteMessage";
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { currentLevelIdAtom } from '../../atoms/currentLevelIdAtom';
+import { currentViewAtom } from '../../atoms/currentViewAtom';
 import TextList from '../text-objects/TextList';
 import Map from '../map/Map';
 
 export default function RenderLevel() {
 	const [level, setLevel] = useState(null);
 	const [currentLevelId, setCurrentLevelId] = useRecoilState(currentLevelIdAtom);
+	const [currentView, setCurrentView] = useRecoilState(currentViewAtom);
 	
 	useEffect(() => {
 		// Create and subscribe to state changes
@@ -31,6 +33,18 @@ export default function RenderLevel() {
 			levelState.destroy();
 		}
 	}, [currentLevelId]);
+	
+	// HANDLE LEVEL SWITCHING
+	useEffect(() => {
+		console.log("Current view: ", currentView)
+		if (currentView == 0) {
+			setCurrentLevelId("DemoLevel1")
+		}
+		if (currentView == 1) {
+			setCurrentLevelId("DemoLevel2");
+		}
+		
+	}, [currentView]);
 	
 	if (!level) {
 		return null;
@@ -57,7 +71,9 @@ export default function RenderLevel() {
 			<p
 				style={{margin: 0}}
 			>Current level: {currentLevelId}</p>
-			<button onClick={() => toggleLevel()} style={{width: "100px", marginBottom: "12px"}}>Change level</button>
+			{(currentLevelId === "DemoLevel1" || currentLevelId === "DemoLevel3") && (	
+				<button onClick={() => toggleLevel()} style={{width: "100px", marginBottom: "12px"}}>Toggle level</button>
+			)}
 			<div
 				className={styles.gameScreen}
 				style={{
