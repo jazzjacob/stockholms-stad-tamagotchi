@@ -13,6 +13,7 @@ import { currentLevelIdAtom } from '../../atoms/currentLevelIdAtom';
 import { currentViewAtom } from '../../atoms/currentViewAtom';
 import TextList from '../text-objects/TextList';
 import Map from '../map/Map';
+import SingleRowText from '../text-objects/SingleRowText'
 
 export default function RenderLevel() {
 	const [level, setLevel] = useState(null);
@@ -46,6 +47,10 @@ export default function RenderLevel() {
 		
 	}, [currentView]);
 	
+	useEffect(() => {
+
+	}, [])
+	
 	if (!level) {
 		return null;
 	}
@@ -58,6 +63,10 @@ export default function RenderLevel() {
 			setCurrentLevelId("DemoLevel1");
 		}
 		console.log(currentLevelId)	
+	}
+	
+	function handleAButton() {
+		console.log('A button')
 	}
 	
 	return (
@@ -84,6 +93,23 @@ export default function RenderLevel() {
 				<LevelPlacementsLayer level={level} />
 				{currentLevelId === "DemoLevel2" && (
 					<TextList level={level} />
+				)}
+				{currentLevelId === "DemoLevel3" && (
+					<>
+						<SingleRowText level={level} />
+						<button
+							onClick={() => handleAButton()}
+							style={{
+								position: 'absolute',
+								top: '115px',
+								left: '60px',
+								height: "12px",
+								fontSize: "6px"
+							}}
+						>
+							A
+						</button>
+					</>
 				)}
 			</div>
 			<Map />

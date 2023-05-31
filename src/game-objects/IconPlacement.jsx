@@ -18,6 +18,6 @@ export class IconPlacement extends Placement {
 	}
  
 	renderComponent() {
-		return <Sprite frameCoord={"0x22"} />;
+		return <Sprite frameCoord={this.iconTileCoord} />;
 	}
 }

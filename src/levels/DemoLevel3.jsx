@@ -15,6 +15,7 @@
 	 placements: [
 		 { x: 4, y: 3, type: PLACEMENT_TYPE_HERO },
 		 { x: 2, y: 1, type: PLACEMENT_TYPE_ICON },
+		 { x: 4, y: 5, type: PLACEMENT_TYPE_ICON }
 	 ],
  };
  
