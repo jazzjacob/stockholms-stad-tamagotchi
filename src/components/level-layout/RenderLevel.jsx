@@ -11,6 +11,7 @@ import LevelCompleteMessage from "../hud/LevelCompleteMessage";
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { currentLevelIdAtom } from '../../atoms/currentLevelIdAtom';
 import { currentViewAtom } from '../../atoms/currentViewAtom';
+import { savedProjectsAtom } from '../../atoms/savedProjectsAtom';
 import TextList from '../text-objects/TextList';
 import Map from '../map/Map';
 import SingleRowText from '../text-objects/SingleRowText'
@@ -19,7 +20,13 @@ export default function RenderLevel() {
 	const [level, setLevel] = useState(null);
 	const [currentLevelId, setCurrentLevelId] = useRecoilState(currentLevelIdAtom);
 	const [currentView, setCurrentView] = useRecoilState(currentViewAtom);
+	const [savedProjects, setSavedProjects] = useRecoilState(savedProjectsAtom);
 	const [notificationSteps, setNotificationSteps] = useState(null)
+	
+	const currentProjects = [{
+		projectTitle: "Student och forskarbostader",
+		locationName: "Norra djurgarden",
+	}];
 	
 	useEffect(() => {
 		// Create and subscribe to state changes
@@ -45,11 +52,14 @@ export default function RenderLevel() {
 		if (currentView == 1) {
 			setCurrentLevelId("DemoLevel2");
 		}
+		if (currentView == 2) {
+			setCurrentLevelId("DemoLevel4");
+		}
 		
 	}, [currentView]);
 	
 	useEffect(() => {
-		setNotificationSteps(null)
+		setNotificationSteps(null);
 	}, [])
 	
 	if (!level) {
@@ -75,7 +85,8 @@ export default function RenderLevel() {
 		if (notificationSteps == null) {
 			setNotificationSteps(0)
 		} else if (notificationSteps + 1 === 3) {
-			console.log("HÄR SKA VI SÄTTA DATA TILL EN GLOBAL STATE OM SAMRÅDSMÖTE")
+			console.log("HÄR SKA VI SÄTTA DATA TILL EN GLOBAL STATE OM SAMRÅDSMÖTE");
+			setSavedProjects([...savedProjects, currentProjects[0]]);
 			setCurrentLevelId("DemoLevel1");
 			setNotificationSteps(null);
 		} else {
@@ -129,15 +140,15 @@ export default function RenderLevel() {
 										<>
 											<p>{'>> SAMRADSMOTE! <<'}</p>
 											<p>Projekt:</p>
-											<p>STUDENT- OCH FORSKARBOSTADER</p>
-											<p>Norra Djurgarden</p>
+											<p style={{ textTransform: 'uppercase' }}>{currentProjects[0].projectTitle}</p>
+											<p>{currentProjects[0].locationName}</p>
 										</>
 									)}
 									{notificationSteps == 1 && (
 										<>
 											<p>{'>> SAMRADSMOTE! <<'}</p>
-											<p style={{margin: '0px'}}>
-												STUDENT- OCH FORSKARBOSTADER
+											<p style={{margin: '0px', textTransform: 'uppercase' }}>
+												{currentProjects[0].projectTitle}
 											</p>
 											<p>
 												Spara samradet?
@@ -147,8 +158,8 @@ export default function RenderLevel() {
 									{notificationSteps == 2 && (
 										<>
 											<p>{'>> SAMRADSMOTE! <<'}</p>
-											<p style={{margin: '0px'}}>
-												STUDENT- OCH FORSKARBOSTADER
+											<p style={{margin: '0px', textTransform: 'uppercase' }}>
+												{currentProjects[0].projectTitle}
 											</p>
 											<p>
 												SPARAT!
@@ -175,6 +186,32 @@ export default function RenderLevel() {
 							A
 						</button>
 					</>
+				)}
+				{currentLevelId === "DemoLevel4" && (
+					<div
+						style={{
+							position: 'absolute',
+							fontSize: '6px',
+							letterSpacing: '0.5px',
+							left: '16px',
+							padding: '2px',
+							top: '16px'
+						}}
+					>
+						------ DIN LISTA ------
+						{0 < savedProjects.length && (
+							<ul style={{ listStyle: 'none', padding: 0, fontSize: '4px'}}>
+								{savedProjects.map((project) => {
+									return (
+										<li style={{ marginBottom: '2px', borderBottom: '0.4px solid black'}}>
+											{project.projectTitle}
+											<br/>
+											{project.locationName}
+										</li>);
+								})}
+							</ul>
+						)}
+					</div>
 				)}
 			</div>
 			<Map />
