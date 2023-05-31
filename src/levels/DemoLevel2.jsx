@@ -5,7 +5,7 @@
 	 PLACEMENT_TYPE_GOAL,
 	 PLACEMENT_TYPE_HERO,
 	 PLACEMENT_TYPE_WALL,
-	 PLACEMENT_TYPE_ARROW
+	 PLACEMENT_TYPE_ARROW,
  } from "../helpers/consts";
  
  const level = {
@@ -13,7 +13,7 @@
 	 tilesWidth: 5,
 	 tilesHeight: 5,
 	 placements: [
-		 { x: 3, y: 4, type: PLACEMENT_TYPE_ARROW }
+		 { x: 3, y: 4, type: PLACEMENT_TYPE_ARROW },
 	 ],
  };
  

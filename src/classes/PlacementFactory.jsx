@@ -4,7 +4,8 @@ import {
 	PLACEMENT_TYPE_WALL,
 	PLACEMENT_TYPE_CELEBRATION,
 	PLACEMENT_TYPE_FLOUR,
-	PLACEMENT_TYPE_ARROW
+	PLACEMENT_TYPE_ARROW,
+	PLACEMENT_TYPE_ICON
 } from '../helpers/consts';
  import { HeroPlacement } from "../game-objects/HeroPlacement";
  import { GoalPlacement } from "../game-objects/GoalPlacement";
@@ -12,6 +13,7 @@ import {
  import { FlourPlacement } from "../game-objects/FlourPlacement";
  import { CelebrationPlacement } from "../game-objects/CelebrationPlacement";
  import { ArrowPlacement } from '../game-objects/ArrowPlacement';
+ import { IconPlacement } from '../game-objects/IconPlacement';
  
  const placementTypeClassMap = {
 		[PLACEMENT_TYPE_HERO]: HeroPlacement,
@@ -19,7 +21,8 @@ import {
 		[PLACEMENT_TYPE_WALL]: WallPlacement,
 		[PLACEMENT_TYPE_FLOUR]: FlourPlacement,
 		[PLACEMENT_TYPE_CELEBRATION]: CelebrationPlacement,
-		[PLACEMENT_TYPE_ARROW]: ArrowPlacement
+		[PLACEMENT_TYPE_ARROW]: ArrowPlacement,
+		[PLACEMENT_TYPE_ICON]: IconPlacement
 	};
 
 class PlacementFactory {
