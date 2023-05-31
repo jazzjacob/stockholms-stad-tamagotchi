@@ -19,6 +19,7 @@ export default function RenderLevel() {
 	const [level, setLevel] = useState(null);
 	const [currentLevelId, setCurrentLevelId] = useRecoilState(currentLevelIdAtom);
 	const [currentView, setCurrentView] = useRecoilState(currentViewAtom);
+	const [notificationSteps, setNotificationSteps] = useState(null)
 	
 	useEffect(() => {
 		// Create and subscribe to state changes
@@ -48,7 +49,7 @@ export default function RenderLevel() {
 	}, [currentView]);
 	
 	useEffect(() => {
-
+		setNotificationSteps(null)
 	}, [])
 	
 	if (!level) {
@@ -67,6 +68,19 @@ export default function RenderLevel() {
 	
 	function handleAButton() {
 		console.log('A button')
+		console.log(level.placements[0])
+		level.placements[0].collect()
+		level.placements[1].collect()
+		
+		if (notificationSteps == null) {
+			setNotificationSteps(0)
+		} else if (notificationSteps + 1 === 3) {
+			console.log("HÄR SKA VI SÄTTA DATA TILL EN GLOBAL STATE OM SAMRÅDSMÖTE")
+			setCurrentLevelId("DemoLevel1");
+			setNotificationSteps(null);
+		} else {
+			setNotificationSteps(notificationSteps + 1)
+		}
 	}
 	
 	return (
@@ -83,6 +97,7 @@ export default function RenderLevel() {
 			{(currentLevelId === "DemoLevel1" || currentLevelId === "DemoLevel3") && (	
 				<button onClick={() => toggleLevel()} style={{width: "100px", marginBottom: "12px"}}>Toggle level</button>
 			)}
+			<p>{notificationSteps !== null && notificationSteps}</p>
 			<div
 				className={styles.gameScreen}
 				style={{
@@ -95,8 +110,58 @@ export default function RenderLevel() {
 					<TextList level={level} />
 				)}
 				{currentLevelId === "DemoLevel3" && (
+					
 					<>
-						<SingleRowText level={level} />
+						{notificationSteps === null ? (
+							<SingleRowText text={'Press'} level={level} />
+						) : (
+							<>
+								<div style={{
+									position: 'absolute',
+									fontSize: '6px',
+									letterSpacing: '0.5px',
+									left: '16px',
+									padding: '2px',
+									top: '16px'
+									
+								}}>
+									{notificationSteps == 0 && (
+										<>
+											<p>{'>> SAMRADSMOTE! <<'}</p>
+											<p>Projekt:</p>
+											<p>STUDENT- OCH FORSKARBOSTADER</p>
+											<p>Norra Djurgarden</p>
+										</>
+									)}
+									{notificationSteps == 1 && (
+										<>
+											<p>{'>> SAMRADSMOTE! <<'}</p>
+											<p style={{margin: '0px'}}>
+												STUDENT- OCH FORSKARBOSTADER
+											</p>
+											<p>
+												Spara samradet?
+											</p>
+										</>
+									)}
+									{notificationSteps == 2 && (
+										<>
+											<p>{'>> SAMRADSMOTE! <<'}</p>
+											<p style={{margin: '0px'}}>
+												STUDENT- OCH FORSKARBOSTADER
+											</p>
+											<p>
+												SPARAT!
+											</p>
+											<p style={{margin: '0px'}}>
+												I din lista
+											</p>
+										</>
+									)}
+								</div>
+								<SingleRowText text={'Fortsatt'} level={level} />
+							</>
+						)}
 						<button
 							onClick={() => handleAButton()}
 							style={{

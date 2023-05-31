@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import {  currentLevelIdAtom } from '../../atoms/currentLevelIdAtom';
 import { useRecoilState } from 'recoil';
 
-export default function SingleRowText({ level }) {
+export default function SingleRowText({ text, level }) {
 	const [currentLevelId, setCurrentLevelId] = useRecoilState(currentLevelIdAtom);
 	
 	useEffect(() => {
@@ -27,7 +27,7 @@ export default function SingleRowText({ level }) {
 			justifyContent: 'right',
 			alignItems: 'center',
 		}}>
-			Press
+			{text}
 		</div>
 	);
 }
