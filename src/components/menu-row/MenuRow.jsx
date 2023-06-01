@@ -7,44 +7,48 @@ import { currentViewAtom } from '../../atoms/currentViewAtom';
 import LevelsMap from '../../levels/LevelsMap';
 
 export default function MenuRow() {
-	const [currentId, setCurrentId] = useRecoilState(currentLevelIdAtom);
+	//const [currentId, setCurrentId] = useRecoilState(currentLevelIdAtom);
 	const [menuItems, setMenuItems] = useState([
 		{id: 0},
 		{id: 1},
 		{id: 2}
 	]);
 	
-	const setViewState = useSetRecoilState(currentViewAtom);
+	const [currentView, setCurrentView] = useRecoilState(currentViewAtom);
 	const indexOfActiveItem = useRecoilValue(currentViewAtom);
 	
+	useEffect(() => {
+		//console.log("Current view: ", currentView)
+	}, [currentView]);
+	
 	const handleForwardClick = () => {
-		console.log(indexOfActiveItem)
+		//console.log(indexOfActiveItem)
 		const levelsArray = Object.keys(LevelsMap);
-		const currentIndex = levelsArray.findIndex(id => {
+		/*const currentIndex = levelsArray.findIndex(id => {
 			return id === currentId;
-		});
-		const nextLevelId = levelsArray[currentIndex + 1] ?? levelsArray[0];
-		setCurrentId(nextLevelId);
+		});*/
+		//const nextLevelId = levelsArray[currentIndex + 1] ?? levelsArray[0];
+		//setCurrentId(nextLevelId);
 		
 		if (indexOfActiveItem + 1 === menuItems.length) {
-			setViewState(0);
+			setCurrentView(0);
 		} else {
-			setViewState(indexOfActiveItem + 1);
+			setCurrentView(indexOfActiveItem + 1);
 		}
 	}
 	
 	function handleBackwardClick() {
 		const levelsArray = Object.keys(LevelsMap);
 		const currentIndex = levelsArray.findIndex(id => {
-			return id === currentId;
+			//return id === currentId;
 		});
 		const nextLevelId = levelsArray[currentIndex - 1] ?? levelsArray[levelsArray.length - 1];
-		setCurrentId(nextLevelId);
+		//setCurrentId(nextLevelId);
 		
 		if (indexOfActiveItem === 0) {
-			setViewState(menuItems.length - 1);
+			setCurrentView(menuItems.length - 1);
 		} else {
-			setViewState(indexOfActiveItem - 1);
+			setCurrentView(indexOfActiveItem - 1);
 		}
 	}
 	

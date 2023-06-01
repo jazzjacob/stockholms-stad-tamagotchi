@@ -1,14 +1,23 @@
 import { Placement } from "./Placement";
- import Sprite from "../components/object-graphics/Sprite";
- import { ARROW_TILES_MAP } from "../helpers/consts";
+import Sprite from "../components/object-graphics/Sprite";
+import { ARROW_TILES_MAP } from "../helpers/consts";
  
- export class ArrowPlacement extends Placement {
-	 isSolidForBody(_body) {
-		 return true;
-	 }
+export class ArrowPlacement extends Placement {
+	constructor(hasBeenCollected) {
+		super(hasBeenCollected);
+		this.hasBeenCollected = true;
+		this.arrowTileCoord = ARROW_TILES_MAP.DOWN;
+	}
+	 
+	isSolidForBody(_body) {
+		return true;
+	}
+	
+	setArrowDirection(direction) {
+		this.arrowTileCoord = ARROW_TILES_MAP[direction];
+	}
  
-	 renderComponent() {
-		 const arrowTileCoord = ARROW_TILES_MAP.UP;
-		 return <Sprite frameCoord={arrowTileCoord} />;
-	 }
- }
+	renderComponent() {
+		return <Sprite frameCoord={this.arrowTileCoord} />;
+	}
+}

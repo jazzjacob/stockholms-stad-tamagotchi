@@ -1,13 +1,15 @@
 export const CELL_SIZE = 16;
  export const Z_INDEX_LAYER_SIZE = 10;
-export const SPRITE_SHEET_SRC = '/ciabattas-revenge-sprites-with-arrows.png';
+export const SPRITE_SHEET_SRC = '/ciabattas-revenge-sprites-3.png';
 
 export const PLACEMENT_TYPE_HERO = "HERO";
 export const PLACEMENT_TYPE_GOAL = "GOAL";
- export const PLACEMENT_TYPE_WALL = "WALL";
- export const PLACEMENT_TYPE_FLOUR = "FLOUR";
- export const PLACEMENT_TYPE_CELEBRATION = "CELEBRATION";
- export const PLACEMENT_TYPE_ARROW = "ARROW";
+export const PLACEMENT_TYPE_WALL = "WALL";
+export const PLACEMENT_TYPE_FLOUR = "FLOUR";
+export const PLACEMENT_TYPE_CELEBRATION = "CELEBRATION";
+export const PLACEMENT_TYPE_ARROW = "ARROW";
+export const PLACEMENT_TYPE_ICON = "ICON"
+ 
 
 export const DIRECTION_LEFT = "LEFT";
 export const DIRECTION_RIGHT = "RIGHT";
@@ -52,6 +54,19 @@ export const THEME_BACKGROUNDS = {
 
 export const ARROW_TILES_MAP = {
 	UP: "0x21",
+	DOWN: "1x21",
+	LEFT: "2x21",
+	RIGHT: "3x21",
+	UP_RIGHT: "4x21",
+	UP_LEFT: "5x21",
+	DOWN_RIGHT: "6x21",
+	DOWN_LEFT: "7x21",
+}
+
+export const ICON_TILES_MAP = {
+	EXCLAMATION_POINT: "0x22",
+	A_BUTTON: "1x22",
+	B_BUTTON: "2x22",
 }
 
 export const THEME_TILES_MAP = {

@@ -22,11 +22,11 @@ export default function LevelBackgroundTilesLayer({ level }) {
 	for (let y = 0 ; y <= heightWithWalls ; y++) {
 		for (let x = 0 ; x <= widthWithWalls ; x++) {
 			// Skip Botton Left and Bottom Right for intentional blank tile
-			if (y === heightWithWalls) {
+			/*if (y === heightWithWalls) {
 				if (x === 0 || x === widthWithWalls) {
 					continue;
 				}
-			}
+			}*/
 			
 			// Add a cell to the map
 			canvases.push(
@@ -40,5 +40,5 @@ export default function LevelBackgroundTilesLayer({ level }) {
 		}
 	} 
 	
-	return <div>{canvases}</div>;
+	return <>{canvases}</>;
 }

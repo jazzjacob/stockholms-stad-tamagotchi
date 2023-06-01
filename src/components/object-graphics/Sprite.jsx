@@ -34,7 +34,16 @@ function Sprite({ frameCoord, size = 16 }) {
 		
 	}, [spriteSheetImage, frameCoord, size]);
 	
-	return <canvas width={size} height={size} ref={canvasRef} />;
+	return <canvas
+		width={size}
+		height={size}
+		ref={canvasRef}
+		style={{
+			//outline: "1px solid blue",
+			marginBottom: "0",
+			padding: 0
+		}}
+	/>;
 }
 
 const MemoizedSprite = React.memo(Sprite);

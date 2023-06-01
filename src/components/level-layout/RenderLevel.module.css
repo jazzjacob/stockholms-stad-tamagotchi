@@ -1,14 +1,22 @@
 .fullScreenContainer {
-	align-items: center;
+	height: 100%;
+	width: 100%;
+	padding: 32px;
 	display: flex;
-	inset: 0; /* What is this? */
-	justify-content: center;
-	position: absolute;
+	flex-direction: column;
+	/*align-items: center;
+	display: flex;*/
+	/*inset: 0;*/ /* What is this? */
+	/*justify-content: center;*/
+	/*position: absolute;*/
 }
 
 .gameScreen {
-	width: var(--game-viewport-width);
-	height: var(--game-viewport-height);
+	/*max-width: 300px;*/
+	height: fit-content;
 	transform: scale(var(--pixel-size));
-	/*outline: 2px solid lightgray;*/
+	transform-origin: top left;
+	/*outline: 30px solid red;*/
+	display: flex;
+	flex-wrap: wrap;
 }
