@@ -89,6 +89,11 @@ export default function Map() {
 	
 	function handleMouseEnter() {
 		console.log("MOUSE ENTER")
+		const centerPoint = centerPointRef.current;
+		setCenterPointCoordinates({
+			x: centerPoint.offsetLeft + (centerPoint.offsetWidth / 2),
+			y: centerPoint.offsetTop + (centerPoint.offsetHeight / 2)
+		});
 	}
 	
 	function handleMouseLeave() {
